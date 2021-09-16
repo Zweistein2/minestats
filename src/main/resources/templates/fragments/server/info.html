@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <div class="row row-cols-2 mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Informationen
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td th:text="${info.name}"></td>
+                        </tr>
+                        <tr>
+                            <th>Version</th>
+                            <td th:text="${info.version}"></td>
+                        </tr>
+                        <tr>
+                            <th>Software</th>
+                            <td th:text="${info.software}"></td>
+                        </tr>
+                        <tr>
+                            <th>Maximale Spieler</th>
+                            <td th:text="${info.maxPlayers}"></td>
+                        </tr>
+                        <tr>
+                            <th>Spielmodus</th>
+                            <td th:text="${info.modus}"></td>
+                        </tr>
+                        <tr>
+                            <th>Aktuelle Karte</th>
+                            <td th:text="${info.map}"></td>
+                        </tr>
+                        <tr>
+                            <th>Seed</th>
+                            <td th:text="${info.seed}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Spieleinstellungen
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Schwierigkeitsgrad</th>
+                            <td th:text="${info.difficulty}"></td>
+                        </tr>
+                        <tr>
+                            <th>Sichtweite</th>
+                            <td th:text="${info.viewDistance}"></td>
+                        </tr>
+                        <tr>
+                            <th>Monster</th>
+                            <td th:text="${info.mobs == true ? 'Aktiviert' : 'Deaktiviert'}"></td>
+                        </tr>
+                        <tr>
+                            <th>NPCs</th>
+                            <td th:text="${info.npcs == true ? 'Aktiviert' : 'Deaktiviert'}"></td>
+                        </tr>
+                        <tr>
+                            <th>Tiere</th>
+                            <td th:text="${info.animals == true ? 'Aktiviert' : 'Deaktiviert'}"></td>
+                        </tr>
+                        <tr>
+                            <th>PvP</th>
+                            <td th:text="${info.pvp == true ? 'Aktiviert' : 'Deaktiviert'}"></td>
+                        </tr>
+                        <tr>
+                            <th>Whitelist</th>
+                            <td th:text="${info.whitelist == true ? 'Aktiviert' : 'Deaktiviert'}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Gerade online
+                </div>
+                <div class="card-body">
+                    <th:block th:each="playername, iterStat: ${playerlist}">
+                        <a th:if="${playername != 'Niemand'}" th:href="@{/player?playername={playername}(playername=${playername})}" th:text="${playername}"></a><th:block th:if="${!iterStat.last}">,</th:block>
+                        <span th:if="${playername == 'Niemand'}" th:text="${playername}"></span>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

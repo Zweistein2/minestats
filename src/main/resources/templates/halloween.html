@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Beispielseite</title>
+        <link th:replace="@{fragments/header}">
+    </head>
+    <div id="wrapper">
+        <link th:replace="@{fragments/navbar}">
+    </div>
+    <body>
+        <link th:replace="@{fragments/sidebar}">
+        <div class="container">
+            <span th:if="${blub != null}" th:text="${blub.value}"></span>
+        </div>
+    </body>
+    <link th:replace="@{fragments/footer}">
+</html>

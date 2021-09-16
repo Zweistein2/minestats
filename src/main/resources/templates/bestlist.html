@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title th:text="#{bestlistTitle}"></title>
+        <link th:replace="@{fragments/header}">
+    </head>
+    <div id="wrapper">
+        <link th:replace="@{fragments/navbar}">
+    </div>
+    <body>
+        <link th:replace="@{fragments/sidebar}">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        <span th:text="#{bestlistTitle}"></span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row row-cols-3">
+                <div class="col" th:each="customKey: ${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).values()}">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{${customKey}}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    <tr th:each="player, iterStat: ${#lists.sort(players, T(de.zweistein2.minestats.components.PlayerStatComparator).of(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM, customKey))}" th:if="${iterStat.index} < 10 and ${player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(customKey)} > 0">
+                                        <td>
+                                            <img th:src="'https://cravatar.eu/helmavatar/' + ${player.username}">
+                                            <a th:href="@{/player?playername={playername}(playername=${player.username})}" th:text="${player.username}"></a>
+                                        </td>
+                                        <td class="text-end" th:if="${customKey.name == 'DEATHS'}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(customKey), 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{deaths}"></span>
+                                        </td>
+                                        <td class="text-end" th:if="${#strings.contains(customKey.name, 'TIME')}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${T(de.zweistein2.minestats.controller.PlayerController).timeFormat(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(customKey) / 20 / 60, #locale)}"></span>
+                                        </td>
+                                        <td class="text-end" th:if="${#strings.endsWith(customKey.name, 'ONE_CM')}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(customKey) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                        </td>
+                                        <td class="text-end" th:unless="${customKey.name == 'DEATHS' or #strings.endsWith(customKey.name, 'ONE_CM') or #strings.contains(customKey.name, 'TIME')}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(customKey), 1, 'DEFAULT', 0, 'DEFAULT')}"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a th:href="'list?statCategory=CUSTOM&statName=' + ${customKey}" th:text="#{showMore}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <link th:replace="@{fragments/footer}">
+</html>

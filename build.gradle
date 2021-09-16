@@ -1,0 +1,124 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.jetbrains.kotlin.plugin.allopen' version '1.5.30'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.5.30'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.30'
+    id 'jacoco'
+    id 'idea'
+    id 'java'
+}
+
+group = "de.zweistein2"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = '16'
+targetCompatibility = '16'
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "16"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "16"
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url "https://reposilite.potionlabs.de/releases"
+        credentials {
+            username = mavenUser
+            password = mavenPassword
+        }
+    }
+    maven {
+        url "https://reposilite.potionlabs.de/snapshots"
+        credentials {
+            username = mavenUser
+            password = mavenPassword
+        }
+    }
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+ext {
+    set('testcontainersVersion', "1.15.3")
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.30'
+    implementation 'io.github.microutils:kotlin-logging:1.12.0'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.github.Steveice10:MCProtocolLib:1.16.5-2'
+    compileClasspath 'mysql:mysql-connector-java:5.1.6'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'org.slf4j:slf4j-log4j12:1.7.30'
+    testImplementation 'org.testcontainers:mongodb'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.mockito:mockito-core:3.5.10'
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+    // report is always generated after tests run
+    finalizedBy jacocoTestReport
+}
+
+jacoco {
+    // You may modify the Jacoco version here
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    // tests are required to run before generating the report
+    dependsOn test
+    // Adjust the output of the test report
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
+}

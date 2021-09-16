@@ -1,0 +1,58 @@
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.h1, h1 {
+    font-size: 36px;
+}
+
+#page-wrapper {
+    margin: 0 0 0 250px;
+    padding: 0 30px;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.huge {
+    font-size: 40px;
+}
+
+.history_chart {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+.medal0 {
+    --fa-primary-color: #D6AF36;
+    --fa-secondary-color: red;
+}
+
+.medal1 {
+    --fa-primary-color: #A7A7AD;
+    --fa-secondary-color: blue;
+}
+
+.medal2 {
+    --fa-primary-color: #A77044;
+    --fa-secondary-color: green;
+}
+
+.vertical-align {
+    top: 3px;
+    position: relative;
+}
+
+.icon-anchor {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}

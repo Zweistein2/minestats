@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head th:with="title=#{playerTitle}">
+        <title th:text="${player != null ? player.username : title}"></title>
+        <link th:replace="@{fragments/header}">
+        <script th:src="@{/js/frameworks/masonry/masonry.pkgd.min.js}" data-cfasync="false"></script>
+    </head>
+    <div id="wrapper">
+        <link th:replace="@{fragments/navbar}">
+    </div>
+    <body>
+        <link th:replace="@{fragments/sidebar}">
+        <div id="page-wrapper">
+            <th:block th:if="${twenthyLastOnlinePlayers != null}">
+                <div class="row" th:replace="@{fragments/player/playerOverview}"></div>
+            </th:block>
+            <th:block th:if="${twenthyLastOnlinePlayers == null}">
+                <div class="row" th:replace="@{fragments/player/playerDetailView}"></div>
+            </th:block>
+        </div>
+    </body>
+    <link th:replace="@{fragments/footer}">
+</html>

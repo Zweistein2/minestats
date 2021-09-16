@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                <img th:src="'https://crafatar.com/renders/head/' + ${player.uuid} + '?scale=4&overlay'">
+                <span th:text="${player.username}"></span>
+            </h1>
+        </div>
+    </div>
+    <div class="row row-cols-3" data-masonry='{"percentPosition": true }'>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header" th:text="#{information}"></div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>UUID:</td>
+                                <td class="text-end" th:text="${player.uuid}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{lastOnline} + ':'"></td>
+                                <td class="text-end" th:text="${lastOnlineInMinutes}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{playTime} + ':'"></td>
+                                <td class="text-end" th:text="${playingTimeInMinutes}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{averagePlayTime} + ':'"></td>
+                                <td class="text-end" th:text="${averagePlayingTimeInMinutes}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{leftGames} + ':'"></td>
+                                <td class="text-end" th:text="${player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).LEAVE_GAME)}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{medalsEarned} + ':'"></td>
+                                <td class="text-end">
+                                    <i th:class="'fad fa-medal medal0'"></i>
+                                    <span th:text="${playerMedals.first}"></span>
+                                    <i th:class="'fad fa-medal medal1'"></i>
+                                    <span th:text="${playerMedals.second}"></span>
+                                    <i th:class="'fad fa-medal medal2'"></i>
+                                    <span th:text="${playerMedals.third}"></span>
+                                </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header" th:text="#{distances}"></div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).CROUCH_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).CROUCH_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).SPRINT_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).SPRINT_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).SWIM_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).SWIM_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).FALL_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).FALL_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).CLIMB_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).CLIMB_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).FLY_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).FLY_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_UNDER_WATER_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_UNDER_WATER_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_ON_WATER_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_ON_WATER_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MINECART_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MINECART_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).BOAT_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).BOAT_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PIG_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PIG_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).STRIDER_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).STRIDER_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).HORSE_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).HORSE_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).AVIATE_ONE_CM}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).AVIATE_ONE_CM) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{totalDistance} + ':'"></td>
+                                <!-- TODO: Gesamt Value aufaddieren -->
+                                <th class="text-end" th:text="${#numbers.formatDecimal(
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).CROUCH_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).SPRINT_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).SWIM_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).FALL_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).CLIMB_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).FLY_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_UNDER_WATER_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_ON_WATER_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MINECART_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).BOAT_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PIG_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).STRIDER_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).HORSE_ONE_CM) / 100 +
+                                player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).AVIATE_ONE_CM) / 100
+                                , 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-body text-center" style="height: 485px">
+                    <img th:src="'https://crafatar.com/renders/body/' + ${player.uuid} + '?scale=10&overlay'">
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header" th:text="#{miscellaneous}"></div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_DEALT}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_DEALT), 1, 'DEFAULT', 1, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_TAKEN}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_TAKEN), 1, 'DEFAULT', 1, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DEATHS}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DEATHS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAYER_KILLS}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAYER_KILLS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_TRIGGER}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_TRIGGER), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_WIN}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_WIN), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DROP}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DROP), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_CHEST}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_CHEST), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_ENDERCHEST}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_ENDERCHEST), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_SHULKER_BOX}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_SHULKER_BOX), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_BARREL}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_BARREL), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).EAT_CAKE_SLICE}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).EAT_CAKE_SLICE), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAY_RECORD}} + ':'"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAY_RECORD), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-3" data-masonry='{"percentPosition": true }'>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header alert-success" th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS}}"></div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" th:text="#{mob}"></th>
+                                <th scope="col" class="text-end" th:text="#{kills}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="mobStats: ${killedMobsList}">
+                                <td th:text="#{${mobStats.first}}"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(mobStats.second, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header alert-danger" th:text="#{killedByMobs}"></div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" th:text="#{mob}"></th>
+                                <th scope="col" class="text-end" th:text="#{kills}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="mobStats: ${killedByMobsList}">
+                                <td th:text="#{${mobStats.first}}"></td>
+                                <td class="text-end" th:text="${#numbers.formatDecimal(mobStats.second, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

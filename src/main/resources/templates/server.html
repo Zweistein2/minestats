@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Serverinfos</title>
+        <link th:replace="@{fragments/header}">
+    </head>
+    <div id="wrapper">
+        <link th:replace="@{fragments/navbar}">
+    </div>
+    <body>
+        <link th:replace="@{fragments/sidebar}">
+        <div id="page-wrapper">
+            <div class="row" th:replace="@{fragments/server/meta}"></div>
+            <div class="row" th:replace="@{fragments/server/info}"></div>
+            <div class="row" th:replace="@{fragments/server/graphs}"></div>
+        </div>
+    </body>
+    <link th:replace="@{fragments/footer}">
+</html>

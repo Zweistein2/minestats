@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title th:text="#{mobs}"></title>
+        <link th:replace="@{fragments/header}">
+        <link th:href="@{/css/frameworks/minecrafticons/minecrafticons.css}" rel="stylesheet" type="text/css">
+    </head>
+    <div id="wrapper">
+        <link th:replace="@{fragments/navbar}">
+    </div>
+    <body>
+        <link th:replace="@{fragments/sidebar}">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        <i th:if="${mobName != null}" class="icon-32 vertical-align" th:classappend="${#strings.replace(#strings.toLowerCase(mobName), '_', '-')}"></i>
+                        <span th:text="#{mobs}"></span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row row-cols-2" th:if="${mobName != null}">
+                <div class="col" th:each="categoryKey: ${ {'KILLED', 'KILLED_BY'} }" th:if="${#lists.sort(players, T(de.zweistein2.minestats.components.PlayerStatComparator).of(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(categoryKey), T(de.zweistein2.minestats.models.minecraftstats.MobKeys).valueOf(mobName)))[0].stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(categoryKey)).forStat(T(de.zweistein2.minestats.models.minecraftstats.MobKeys).valueOf(mobName))} > 0">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{${categoryKey}} + ': ' + #{${mobName}}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    <tr th:each="player, iterStat: ${#lists.sort(players, T(de.zweistein2.minestats.components.PlayerStatComparator).of(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(categoryKey), T(de.zweistein2.minestats.models.minecraftstats.MobKeys).valueOf(mobName)))}" th:if="${iterStat.index} < 10 and ${player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(categoryKey)).forStat(T(de.zweistein2.minestats.models.minecraftstats.MobKeys).valueOf(mobName))} > 0">
+                                        <td>
+                                            <img th:src="'https://cravatar.eu/helmavatar/' + ${player.username}">
+                                            <a th:href="@{/player?playername={playername}(playername=${player.username})}" th:text="${player.username}"></a>
+                                        </td>
+                                        <td class="text-end">
+                                            <span th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(categoryKey)).forStat(T(de.zweistein2.minestats.models.minecraftstats.MobKeys).valueOf(mobName)), 1, 'DEFAULT', 0, 'DEFAULT')}"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a th:href="'list?statCategory=' + ${categoryKey} + '&statName=' + ${mobName} + '&isBlock=false'" th:text="#{showMore}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1" th:if="${mobName == null}">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{mobSelection}"></div>
+                    <div class="card-body">
+                        <a class="icon-anchor" th:each="mobKey: ${T(de.zweistein2.minestats.models.minecraftstats.MobKeys).values()}" th:href="'mobs?name=' + ${mobKey}" data-bs-toggle="tooltip" data-bs-placement="top" th:title="#{${mobKey}}">
+                            <i class="icon-32" th:classappend="${#strings.replace(#strings.toLowerCase(mobKey), '_', '-')}"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <link th:replace="@{fragments/footer}">
+    
+    <script>
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    </script>
+</html>

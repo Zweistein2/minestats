@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Server & Technik
+            </h1>
+        </div>
+    </div>
+    <div class="row row-cols-2 mb-4">
+        <div class="col">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <i class="fas fa-users fa-5x"></i>
+                        </div>
+                        <div class="col-sm-9 text-end">
+                            <div class="huge" th:text="${meta.onlinePlayers} + ' / ' + ${info.maxPlayers}"></div>
+                            <div>
+                                Spieler online
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <i class="fas fa-database fa-5x"></i>
+                        </div>
+                        <div class="col-sm-9 text-end">
+                            <div class="huge" th:text="${#numbers.formatDecimal(meta.worldSize, 1, 'DEFAULT', 2, 'DEFAULT')} + ' GB'"></div>
+                            <div>
+                                Größe der Welten (zusammengefasst)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-3 mb-4">
+        <div class="col">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <i class="fas fa-server fa-5x"></i>
+                        </div>
+                        <div class="col-sm-9 text-end">
+                            <div class="huge" th:text="${meta.currentMemoryLoad} + ' / ' + ${meta.maxMemoryLoad} + ' MB'"></div>
+                            <div>
+                                RAM - Auslastung
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-warning text-black-50">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <i class="fas fa-chart-line fa-5x"></i>
+                        </div>
+                        <div class="col-sm-9 text-end">
+                            <div class="huge" th:text="${meta.tps} + ' TPS'"></div>
+                            <div>
+                                TPS - Auslastung
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-info text-black-50">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <i class="fas fa-server fa-5x"></i>
+                        </div>
+                        <div class="col-sm-9 text-end">
+                            <div class="huge" th:text="${meta.cpuLoad} + ' %'"></div>
+                            <div>
+                                CPU - Auslastung
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

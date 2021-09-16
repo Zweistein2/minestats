@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <div class="row row-cols-1 mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Verlauf
+                    <div style="float: right;">
+                        Letzten 24 Stunden
+                    </div>
+                </div>
+                <div class="card-body" id="chart_container">
+                    <div class="history_chart mb-4">
+                        <canvas id="history_chart_player"></canvas>
+                    </div>
+                    <div class="history_chart mb-4">
+                        <canvas id="history_chart_tps"></canvas>
+                    </div>
+                    <div class="history_chart mb-4">
+                        <canvas id="history_chart_cpu"></canvas>
+                    </div>
+                    <div class="history_chart mb-4">
+                        <canvas id="history_chart_ram"></canvas>
+                    </div>
+                    <div class="history_chart mb-4">
+                        <canvas id="history_chart_worldSize"></canvas>
+                    </div>
+                    <div class="history_chart mb-4">
+                        <canvas id="history_chart_donations"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/graphs.js}" data-cfasync="false"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let playerChartPayload = JSON.parse(/*[[${playerChart}]]*/ '{}') ;
+        let tpsChartPayload = JSON.parse(/*[[${tpsChart}]]*/ '{}') ;
+        let cpuChartPayload = JSON.parse(/*[[${cpuChart}]]*/ '{}') ;
+        let ramChartPayload = JSON.parse(/*[[${ramChart}]]*/ '{}') ;
+        let worldSizeChartPayload = JSON.parse(/*[[${worldSizeChart}]]*/ '{}') ;
+        let donationsChartPayload = JSON.parse(/*[[${donationsChart}]]*/ '{}') ;
+        let timezone = /*[[${@environment.getProperty('minestats.timezone')}]]*/ 'minestats.timezone';
+        /*]]>*/
+
+        let playerChartContext = $('#history_chart_player');
+        let playerChart = new Chart(playerChartContext, getChartConfig(playerChartPayload.data, playerChartPayload.labels, playerChartPayload.legendLabel, playerChartPayload.title, playerChartPayload.yMin, playerChartPayload.yMax, playerChartPayload.axisLabel, 'hour'));
+        let tpsChartContext = $('#history_chart_tps');
+        let tpsChart = new Chart(tpsChartContext, getChartConfig(tpsChartPayload.data, tpsChartPayload.labels, tpsChartPayload.legendLabel, tpsChartPayload.title, tpsChartPayload.yMin, tpsChartPayload.yMax, tpsChartPayload.axisLabel, 'hour'));
+        let cpuChartContext = $('#history_chart_cpu');
+        let cpuChart = new Chart(cpuChartContext, getChartConfig(cpuChartPayload.data, cpuChartPayload.labels, cpuChartPayload.legendLabel, cpuChartPayload.title, cpuChartPayload.yMin, cpuChartPayload.yMax, cpuChartPayload.axisLabel, 'hour'));
+        let ramChartContext = $('#history_chart_ram');
+        let ramChart = new Chart(ramChartContext, getChartConfig(ramChartPayload.data, ramChartPayload.labels, ramChartPayload.legendLabel, ramChartPayload.title, ramChartPayload.yMin, ramChartPayload.yMax, ramChartPayload.axisLabel, 'hour'));
+        let worldSizeChartContext = $('#history_chart_worldSize');
+        let worldSizeChart = new Chart(worldSizeChartContext, getChartConfig(worldSizeChartPayload.data, worldSizeChartPayload.labels, worldSizeChartPayload.legendLabel, worldSizeChartPayload.title, worldSizeChartPayload.yMin, worldSizeChartPayload.yMax, worldSizeChartPayload.axisLabel, 'month'));
+        let donationsChartContext = $('#history_chart_donations');
+        let donationsChart = new Chart(donationsChartContext, getDonationChartConfig(donationsChartPayload.data, donationsChartPayload.labels, donationsChartPayload.legendLabel, donationsChartPayload.title, donationsChartPayload.axisLabel, 'month'));
+    </script>
+</html>

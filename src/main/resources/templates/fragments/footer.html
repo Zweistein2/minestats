@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <footer class="page-footer font-small blue">
+        <div class="footer-content mx-auto text-center">
+            <div class="footer-copyright">Made by Unicorns. <i class="fad fa-unicorn" aria-hidden="true"></i></div>
+        </div>
+        <div class="text-end" id="runtimeCounter" th:text="#{runtime} + ': ' + ${runtime != null ? runtime : '0'} + ' ms'"></div>
+    </footer>
+</html>

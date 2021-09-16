@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title th:text="#{dashboardTitle}"></title>
+        <link th:replace="@{fragments/header}">
+    </head>
+    <div id="wrapper">
+        <link th:replace="@{fragments/navbar}">
+    </div>
+    <body>
+    <link th:replace="@{fragments/sidebar}">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    <span>Dashboard</span>
+                </h1>
+            </div>
+        </div>
+        <div class="row row-cols-3 mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header alert-danger" th:text="#{workInProgressTitle}"></div>
+                    <div class="card-body" th:text="#{workInProgressBody}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-2 mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header" th:text="#{implementedFunctionsTitle}"></div>
+                    <div class="card-body">
+                        <ul th:with="message=#{implementedFunctionsBody}">
+                            <li th:each="implementedFunction: ${#strings.arraySplit(message, ';')}" th:text="${implementedFunction}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header" th:text="#{comingUpTitle}"></div>
+                    <div class="card-body">
+                        <ul th:with="message=#{comingUpBody}">
+                            <li th:each="comingUpFunction: ${#strings.arraySplit(message, ';')}" th:text="${comingUpFunction}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+    <link th:replace="@{fragments/footer}">
+</html>

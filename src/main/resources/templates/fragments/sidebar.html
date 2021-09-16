@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <div class="flex-shrink-0 bg-white" id="sidebar">
+        <form class="d-flex">
+            <div class="input-group" id="sidebar-search">
+                <input class="form-control" id="player_search_input" type="search" placeholder="Spieler suchen..." aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+        <ul>
+            <li th:each="page: ${T(de.zweistein2.minestats.Pages).values()}" th:if="${page.pageIcon != null}" class="py-2 ps-2 pe-3">
+                <a th:href="${page.pageUrl}">
+                    <i th:class="${page.pageIcon} + ' icon'"></i>
+                    <span th:text="${page.pageName}"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Beispielseite</title>
+        <link th:replace="@{fragments/header}">
+    </head>
+    <div id="wrapper">
+        <link th:replace="@{fragments/navbar}">
+    </div>
+    <body>
+        <link th:replace="@{fragments/sidebar}">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        <span th:text="#{listTitle}"></span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row row-cols-3">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{${statName}}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    <tr th:each="player, iterStat: ${players}" th:if="${player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(statCategory)).forStat(statName, isBlock)} > 0">
+                                        <td>
+                                            <img th:src="'https://cravatar.eu/helmavatar/' + ${player.username}">
+                                            <a th:href="@{/player?playername={playername}(playername=${player.username})}" th:text="${player.username}"></a>
+                                        </td>
+                                        <td class="text-end" th:if="${statName == 'DEATHS'}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(statCategory)).forStat(statName, isBlock), 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{deaths}"></span>
+                                        </td>
+                                        <td class="text-end" th:if="${#strings.contains(statName, 'TIME')}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${T(de.zweistein2.minestats.controller.PlayerController).timeFormat(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(statCategory)).forStat(statName, isBlock) / 20 / 60, #locale)}"></span>
+                                        </td>
+                                        <td class="text-end" th:if="${#strings.endsWith(statName, 'ONE_CM')}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(statCategory)).forStat(statName, isBlock) / 100, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                        </td>
+                                        <td class="text-end" th:unless="${statName == 'DEATHS' or #strings.endsWith(statName, 'ONE_CM') or #strings.contains(statName, 'TIME')}">
+                                            <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                            <span th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).valueOf(statCategory)).forStat(statName, isBlock), 1, 'DEFAULT', 0, 'DEFAULT')}"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <link th:replace="@{fragments/footer}">
+</html>

@@ -1,0 +1,22 @@
+.cc-revoke {
+    background-color: #007bff !important;
+}
+
+.cc-window {
+    background-color: #007bff !important;
+}
+
+.cc-btn {
+    background-color: #fff !important;
+    color: #007bff !important;
+}
+
+.cc-btn:first-child {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+
+#runtimeCounter {
+    font-size: 0.8em;
+    color: #999999;
+}
