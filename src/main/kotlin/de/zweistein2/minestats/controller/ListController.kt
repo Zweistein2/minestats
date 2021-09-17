@@ -2,6 +2,7 @@ package de.zweistein2.minestats.controller
 
 import de.zweistein2.minestats.components.PlayerStatComparator
 import de.zweistein2.minestats.models.minecraftstats.*
+import de.zweistein2.minestats.services.BanService
 import de.zweistein2.minestats.services.PlayerService
 import mu.KotlinLogging
 import org.springframework.cache.annotation.Cacheable
@@ -14,6 +15,7 @@ import kotlin.system.measureTimeMillis
 @Controller
 class ListController(
     val playerService: PlayerService,
+    val banService: BanService,
 ) {
     @Cacheable("list")
     @GetMapping("/list")
@@ -23,9 +25,10 @@ class ListController(
         val runtimeInMilliseconds = measureTimeMillis {
             val key = MobKeys.valueOfOrNull(statName) ?: CustomKeys.valueOfOrNull(statName) ?: if(isBlock) { BlockKeys.valueOfOrNull(statName) } else { ItemKeys.valueOfOrNull(statName) } ?: CustomKeys.JUMP
 
+            val bans = banService.loadBans()
             val players = playerService.loadPlayers().sortedWith(PlayerStatComparator(CategoryKeys.valueOf(statCategory), key)).take(100)
 
-            model.addAttribute("players", players)
+            model.addAttribute("players", players.filter { player -> !bans.map { it.uuid }.contains(player.uuid) })
             model.addAttribute("statCategory", statCategory)
             model.addAttribute("statName", statName)
             model.addAttribute("isBlock", isBlock)
@@ -41,8 +44,9 @@ class ListController(
     fun getBestlists(model: Model): String {
         val runtimeInMilliseconds = measureTimeMillis {
             val players = playerService.loadPlayers()
+            val bans = banService.loadBans()
 
-            model.addAttribute("players", players)
+            model.addAttribute("players", players.filter { player -> !bans.map { it.uuid }.contains(player.uuid) })
         }
 
         model.addAttribute("runtime", runtimeInMilliseconds)
@@ -55,8 +59,9 @@ class ListController(
     fun getBlocklists(model: Model, @RequestParam("name") blockName: String?): String {
         val runtimeInMilliseconds = measureTimeMillis {
             val players = playerService.loadPlayers()
+            val bans = banService.loadBans()
 
-            model.addAttribute("players", players)
+            model.addAttribute("players", players.filter { player -> !bans.map { it.uuid }.contains(player.uuid) })
             model.addAttribute("blockName", blockName)
         }
 
@@ -70,8 +75,9 @@ class ListController(
     fun getItemlists(model: Model, @RequestParam("name") itemName: String?): String {
         val runtimeInMilliseconds = measureTimeMillis {
             val players = playerService.loadPlayers()
+            val bans = banService.loadBans()
 
-            model.addAttribute("players", players)
+            model.addAttribute("players", players.filter { player -> !bans.map { it.uuid }.contains(player.uuid) })
             model.addAttribute("itemName", itemName)
         }
 
@@ -85,8 +91,9 @@ class ListController(
     fun getMoblists(model: Model, @RequestParam("name") mobName: String?): String {
         val runtimeInMilliseconds = measureTimeMillis {
             val players = playerService.loadPlayers()
+            val bans = banService.loadBans()
 
-            model.addAttribute("players", players)
+            model.addAttribute("players", players.filter { player -> !bans.map { it.uuid }.contains(player.uuid) })
             model.addAttribute("mobName", mobName)
         }
 

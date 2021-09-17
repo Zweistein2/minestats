@@ -21,6 +21,7 @@ import java.util.*
 class PlayerService(
     val serverPlayerRepository: ServerPlayerRepository,
     val minestatProperties: MinestatProperties,
+    val banService: BanService,
 ) {
     companion object {
         fun ServerPlayerEntity.convertEntityToModel(): ServerPlayerModel = ServerPlayerModel(UUID.fromString(this.uuid), this.username ?: "",
@@ -44,7 +45,8 @@ class PlayerService(
     }
 
     fun getAllMedals(): List<Pair<String, Triple<Int, Int, Int>>> {
-        val players = serverPlayerRepository.findAll().stream().map { it.convertEntityToModel() }.toList() ?: listOf()
+        val bans = banService.loadBans()
+        val players = serverPlayerRepository.findAll().stream().map { it.convertEntityToModel() }.filter { player -> !bans.map { it.uuid }.contains(player.uuid) }.toList() ?: listOf()
         val allMedals = mutableMapOf<String, Triple<Int, Int, Int>>()
 
         for (stat in CustomKeys.values()) {
