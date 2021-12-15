@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
-import java.time.*
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.system.measureTimeMillis
@@ -44,9 +46,9 @@ class PlayerController(
     @GetMapping("/player")
     fun getPlayerStats(model: Model, @RequestParam playername: String?, locale: Locale = Locale.forLanguageTag(minestatProperties.locale)): String {
         val runtimeInMilliseconds = measureTimeMillis {
-            val players = playerService.loadPlayers()
-
             if(playername.isNullOrBlank()) {
+                val players = playerService.loadPlayers()
+
                 val playerCount = players.size
                 val playersOnline = playerService.loadOnlinePlayers().size
                 val playersOnlineThirtyDaysCount = players.filter { it.changed != null && it.changed.isAfter(LocalDateTime.now(ZoneId.of("UTC")).minusDays(30)) }.size
@@ -69,9 +71,9 @@ class PlayerController(
                 model.addAttribute("twenthyLastOnlinePlayers", twenthyLastOnlinePlayers)
                 model.addAttribute("topTenPlayers", playerService.getTopTenPlayers())
             } else {
-                require(players.any { it.username == playername }) { "Der Benutzer mit dem Namen $playername existiert nicht"}
-
-                val player = players.first { it.username == playername }
+                require(!playername.isNullOrBlank()) { "Es muss ein Benutzername angegeben werden!"}
+                val player = playerService.loadPlayer(playername, true)!!
+                val historicPlayer = playerService.loadHistoricPlayer(playername, false)
 
                 val leftGames = if(player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.LEAVE_GAME) == 0L) 1L else player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.LEAVE_GAME)
                 // TotalTimeInTicks / 20 Ticks/Sec / 60 Sec/Min / CountLeaveGame
@@ -91,9 +93,16 @@ class PlayerController(
                 killedByMobs.removeIf { it.second == 0L }
                 killedByMobs.sortByDescending { it.second }
 
+                var overallPlayingTime = (player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.TOTAL_WORLD_TIME) / 20 / 60)
+
+                if(historicPlayer != null) {
+                    overallPlayingTime += (historicPlayer.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.TOTAL_WORLD_TIME) / 20 / 60)
+                }
+
                 model.addAttribute("player", player)
                 model.addAttribute("lastOnlineInMinutes", player.changed?.timeFormat(locale) ?: LocalDateTime.now(ZoneId.of("UTC")).timeFormat(locale))
                 model.addAttribute("playingTimeInMinutes", (player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.TOTAL_WORLD_TIME) / 20 / 60).timeFormat(locale))
+                model.addAttribute("overallPlayingTimeInMinutes", overallPlayingTime.timeFormat(locale))
                 model.addAttribute("averagePlayingTimeInMinutes", averagePlayingTimeInMinutes.timeFormat(locale))
                 model.addAttribute("playerMedals", playerService.getMedalsForPlayer(playername))
                 model.addAttribute("killedMobsList", killedMobs)

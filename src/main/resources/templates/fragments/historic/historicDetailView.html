@@ -20,14 +20,6 @@
                                 <td class="text-end" th:text="${player.uuid}"></td>
                             </tr>
                             <tr>
-                                <td th:text="#{lastOnline} + ':'"></td>
-                                <td class="text-end" th:text="${lastOnlineInMinutes}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{overallPlayTime} + ':'"></td>
-                                <td class="text-end" th:text="${overallPlayingTimeInMinutes}"></td>
-                            </tr>
-                            <tr>
                                 <td th:text="#{playTime} + ':'"></td>
                                 <td class="text-end" th:text="${playingTimeInMinutes}"></td>
                             </tr>
@@ -38,17 +30,6 @@
                             <tr>
                                 <td th:text="#{leftGames} + ':'"></td>
                                 <td class="text-end" th:text="${player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).LEAVE_GAME)}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{medalsEarned} + ':'"></td>
-                                <td class="text-end">
-                                    <i th:class="'fad fa-medal medal0'"></i>
-                                    <span th:text="${playerMedals.first}"></span>
-                                    <i th:class="'fad fa-medal medal1'"></i>
-                                    <span th:text="${playerMedals.second}"></span>
-                                    <i th:class="'fad fa-medal medal2'"></i>
-                                    <span th:text="${playerMedals.third}"></span>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -222,7 +203,7 @@
             </div>
         </div>
     </div>
-    <div class="row row-cols-3">
+    <div class="row row-cols-3 masoned">
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header alert-success" th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS}}"></div>

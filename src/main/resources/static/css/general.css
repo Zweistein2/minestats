@@ -56,3 +56,7 @@ body {
     width: 32px;
     height: 32px;
 }
+
+.alert {
+    margin-top: 25px;
+}

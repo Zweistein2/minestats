@@ -5,7 +5,7 @@
             <h1 class="page-header" th:text="#{playerOverview}"></h1>
         </div>
     </div>
-    <div class="row row-cols-2" data-masonry='{"percentPosition": true }'>
+    <div class="row row-cols-2 masoned">
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header" th:text="#{basicData}"></div>
@@ -85,4 +85,13 @@
     </div>
     <div class="row">
     </div>
+
+    <script>
+        let $grid = $('.masoned').imagesLoaded( function() {
+            // init Masonry after all images have loaded
+            $grid.masonry({
+                percentPosition: true
+            });
+        });
+    </script>
 </html>

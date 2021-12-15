@@ -3,6 +3,12 @@ package de.zweistein2.minestats.models.minecraftstats
 import com.google.gson.JsonObject
 
 class MinecraftStatsCategoryModel(val stats: JsonObject, val category: CategoryKeys) {
+    fun forStat(keyName: String, isBlock: Boolean): Long {
+        val key = CustomKeys.valueOfOrNull(keyName) ?: MobKeys.valueOfOrNull(keyName) ?: if(isBlock) { BlockKeys.valueOfOrNull(keyName) } else { ItemKeys.valueOfOrNull(keyName) } ?: throw IllegalArgumentException("the specified keyname: \"$keyName\" doesn't exist")
+
+        return forStat(key)
+    }
+
     fun forStat(key: Key): Long {
         when (key) {
             is BlockKeys -> { require(category in listOf(CategoryKeys.MINED, CategoryKeys.PICKED_UP, CategoryKeys.DROPPED, CategoryKeys.CRAFTED, CategoryKeys.USED))
@@ -17,12 +23,14 @@ class MinecraftStatsCategoryModel(val stats: JsonObject, val category: CategoryK
                 { "Key isn't a valid stat key" }
         }
 
-        return if(stats[key.jsonName] == null) 0L else stats[key.jsonName].asLong
-    }
-
-    fun forStat(keyName: String, isBlock: Boolean): Long {
-        val key = CustomKeys.valueOfOrNull(keyName) ?: MobKeys.valueOfOrNull(keyName) ?: if(isBlock) { BlockKeys.valueOfOrNull(keyName) } else { ItemKeys.valueOfOrNull(keyName) } ?: throw IllegalArgumentException("the specified keyname: \"$keyName\" doesn't exist")
-
-        return forStat(key)
+        return if(stats[key.jsonName] != null) {
+            stats[key.jsonName].asLong
+        } else if(stats[key.alternatives.find { stats[it] != null }] != null) {
+            stats[key.alternatives.find { stats[it] != null }].asLong
+        } else if(stats["${category.alternative}${key.alternatives.find { stats["${category.alternative}$it"] != null }}"] != null) {
+            stats["${category.alternative}${key.alternatives.find { stats["${category.alternative}$it"] != null }}"].asLong
+        } else {
+            0L
+        }
     }
 }

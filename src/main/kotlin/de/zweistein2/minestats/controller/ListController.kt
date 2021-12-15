@@ -4,7 +4,6 @@ import de.zweistein2.minestats.components.PlayerStatComparator
 import de.zweistein2.minestats.models.minecraftstats.*
 import de.zweistein2.minestats.services.BanService
 import de.zweistein2.minestats.services.PlayerService
-import mu.KotlinLogging
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model

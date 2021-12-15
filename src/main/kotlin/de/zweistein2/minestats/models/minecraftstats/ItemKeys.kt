@@ -1,6 +1,6 @@
 package de.zweistein2.minestats.models.minecraftstats
 
-enum class ItemKeys(override val jsonName: String): Key {
+enum class ItemKeys(override val jsonName: String, override vararg val alternatives: String): Key {
     IRON_SWORD("minecraft:iron_sword"),
     IRON_SHOVEL("minecraft:iron_shovel"),
     IRON_PICKAXE("minecraft:iron_pickaxe"),

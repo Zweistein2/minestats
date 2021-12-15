@@ -8,7 +8,6 @@ import de.zweistein2.minestats.models.serverstats.ServerStatsMetaModel
 import de.zweistein2.minestats.services.MinecraftQuery
 import de.zweistein2.minestats.services.MulticraftAPI
 import de.zweistein2.minestats.services.ServerService
-import mu.KotlinLogging
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Controller

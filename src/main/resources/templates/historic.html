@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
 >
-    <head th:with="title=#{playerTitle}">
+    <head th:with="title=#{historicTitle}">
         <title th:text="${player != null ? player.username : title}"></title>
         <link th:replace="@{fragments/header}">
+        <link th:href="@{/css/frameworks/minecrafticons/minecrafticons.css}" rel="stylesheet" type="text/css">
         <script th:src="@{/js/frameworks/masonry/masonry.pkgd.min.js}" data-cfasync="false"></script>
         <script th:src="@{/js/frameworks/imagesloaded/imagesloaded.pkgd.min.js}" data-cfasync="false"></script>
     </head>
@@ -13,11 +14,11 @@
     <body>
         <link th:replace="@{fragments/sidebar}">
         <div id="page-wrapper">
-            <th:block th:if="${twenthyLastOnlinePlayers != null}">
-                <div class="row" th:replace="@{fragments/player/playerOverview}"></div>
+            <th:block th:if="${players != null}">
+                <div class="row" th:replace="@{fragments/historic/historicOverview}"></div>
             </th:block>
-            <th:block th:if="${twenthyLastOnlinePlayers == null}">
-                <div class="row" th:replace="@{fragments/player/playerDetailView}"></div>
+            <th:block th:if="${players == null}">
+                <div class="row" th:replace="@{fragments/historic/historicDetailView}"></div>
             </th:block>
         </div>
     </body>

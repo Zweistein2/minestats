@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+>
     <head>
-        <title>Beispielseite</title>
+        <title th:text="#{devTitle}"></title>
         <link th:replace="@{fragments/header}">
         <link th:href="@{/css/devstats.css}" rel="stylesheet" type="text/css">
     </head>

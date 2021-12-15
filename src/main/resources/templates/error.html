@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+>
     <head>
-        <title>Beispielseite</title>
+        <title th:text="#{errorTitle}"></title>
         <link th:replace="@{fragments/header}">
     </head>
     <div id="wrapper">
@@ -10,8 +10,14 @@
     </div>
     <body>
         <link th:replace="@{fragments/sidebar}">
-        <div class="container">
-            <span th:if="${blub != null}" th:text="${blub.value}"></span>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div th:if="${message != null}" class="alert alert-danger" role="alert">
+                        <span th:text="${message}"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
     <link th:replace="@{fragments/footer}">

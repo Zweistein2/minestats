@@ -1,6 +1,6 @@
 package de.zweistein2.minestats.models.minecraftstats
 
-enum class BlockKeys(override val jsonName: String): Key {
+enum class BlockKeys(override val jsonName: String, override vararg val alternatives: String): Key {
     STONE("minecraft:stone"),
     GRANITE("minecraft:granite"),
     POLISHED_GRANITE("minecraft:polished_granite"),

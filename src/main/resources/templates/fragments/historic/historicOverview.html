@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" th:text="#{playerOverview}"></h1>
+        </div>
+    </div>
+    <div class="row row-cols-1">
+        <div class="col">
+            <a th:each="player: ${players}" class="icon-anchor" th:href="@{/historic?playername={playername}(playername=${player.username})}" data-bs-toggle="tooltip" data-bs-placement="top" th:title="${player.username}">
+                <img class="icon-32" th:src="'https://cravatar.eu/helmavatar/' + ${player.username}">
+            </a>
+        </div>
+    </div>
+    <div class="row">
+    </div>
+
+    <script>
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+        let $grid = $('.masoned').imagesLoaded( function() {
+            // init Masonry after all images have loaded
+            $grid.masonry({
+                percentPosition: true
+            });
+        });
+    </script>
+</html>
