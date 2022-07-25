@@ -6,6 +6,7 @@ import de.zweistein2.minestats.models.minecraftstats.CategoryKeys
 import de.zweistein2.minestats.models.minecraftstats.CustomKeys
 import de.zweistein2.minestats.models.minecraftstats.MobKeys
 import de.zweistein2.minestats.services.PlayerService
+import de.zweistein2.torque.spring.MonitoringSpringWrapper
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Controller
@@ -21,41 +22,55 @@ class HistoricController(
     val playerService: PlayerService,
     val minestatProperties: MinestatProperties
 ) {
+    val monitoring = MonitoringSpringWrapper(true).getMonitoring()
+
     @Cacheable
     @GetMapping("/historic")
     fun getHistoricPlayerStats(model: Model, @RequestParam playername: String?, locale: Locale = Locale.forLanguageTag(minestatProperties.locale)): String {
         val runtimeInMilliseconds = measureTimeMillis {
             if(playername.isNullOrBlank()) {
-                val players = playerService.loadUnbannedHistoricPlayers()
+                monitoring.withTimer("showAllHistoricPlayers", "frontend") {
+                    val players = playerService.loadUnbannedHistoricPlayers()
 
-                model.addAttribute("players", players)
+                    model.addAttribute("players", players)
+                }
             } else {
-                require(!playername.isNullOrBlank()) { "Es muss ein Benutzername angegeben werden!"}
-                val player = playerService.loadHistoricPlayer(playername, true)!!
+                monitoring.withTimer("showSpecificHistoricPlayer", "frontend", Pair("playerName", playername)) {
+                    val player = playerService.loadHistoricPlayer(playername, true)!!
 
-                val leftGames = if(player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.LEAVE_GAME) == 0L) 1L else player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.LEAVE_GAME)
-                // TotalTimeInTicks / 20 Ticks/Sec / 60 Sec/Min / CountLeaveGame
-                val averagePlayingTimeInMinutes = player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.TOTAL_WORLD_TIME) / 20 / 60 / leftGames
+                    val leftGames = if (player.stats.forCategory(CategoryKeys.CUSTOM)
+                            .forStat(CustomKeys.LEAVE_GAME) == 0L
+                    ) 1L else player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.LEAVE_GAME)
+                    // TotalTimeInTicks / 20 Ticks/Sec / 60 Sec/Min / CountLeaveGame
+                    val averagePlayingTimeInMinutes = player.stats.forCategory(CategoryKeys.CUSTOM)
+                        .forStat(CustomKeys.TOTAL_WORLD_TIME) / 20 / 60 / leftGames
 
-                val killedMobs = mutableListOf<Pair<String, Long>>()
-                for (mobKey in MobKeys.values()) {
-                    killedMobs.add(mobKey.name to player.stats.forCategory(CategoryKeys.KILLED).forStat(mobKey))
+                    val killedMobs = mutableListOf<Pair<String, Long>>()
+                    for (mobKey in MobKeys.values()) {
+                        killedMobs.add(mobKey.name to player.stats.forCategory(CategoryKeys.KILLED).forStat(mobKey))
+                    }
+                    killedMobs.removeIf { it.second == 0L }
+                    killedMobs.sortByDescending { it.second }
+
+                    val killedByMobs = mutableListOf<Pair<String, Long>>()
+                    for (mobKey in MobKeys.values()) {
+                        killedByMobs.add(
+                            mobKey.name to player.stats.forCategory(CategoryKeys.KILLED_BY).forStat(mobKey)
+                        )
+                    }
+                    killedByMobs.removeIf { it.second == 0L }
+                    killedByMobs.sortByDescending { it.second }
+
+                    model.addAttribute("player", player)
+                    model.addAttribute(
+                        "playingTimeInMinutes",
+                        (player.stats.forCategory(CategoryKeys.CUSTOM)
+                            .forStat(CustomKeys.TOTAL_WORLD_TIME) / 20 / 60).timeFormat(locale)
+                    )
+                    model.addAttribute("averagePlayingTimeInMinutes", averagePlayingTimeInMinutes.timeFormat(locale))
+                    model.addAttribute("killedMobsList", killedMobs)
+                    model.addAttribute("killedByMobsList", killedByMobs)
                 }
-                killedMobs.removeIf { it.second == 0L }
-                killedMobs.sortByDescending { it.second }
-
-                val killedByMobs = mutableListOf<Pair<String, Long>>()
-                for (mobKey in MobKeys.values()) {
-                    killedByMobs.add(mobKey.name to player.stats.forCategory(CategoryKeys.KILLED_BY).forStat(mobKey))
-                }
-                killedByMobs.removeIf { it.second == 0L }
-                killedByMobs.sortByDescending { it.second }
-
-                model.addAttribute("player", player)
-                model.addAttribute("playingTimeInMinutes", (player.stats.forCategory(CategoryKeys.CUSTOM).forStat(CustomKeys.TOTAL_WORLD_TIME) / 20 / 60).timeFormat(locale))
-                model.addAttribute("averagePlayingTimeInMinutes", averagePlayingTimeInMinutes.timeFormat(locale))
-                model.addAttribute("killedMobsList", killedMobs)
-                model.addAttribute("killedByMobsList", killedByMobs)
             }
         }
 

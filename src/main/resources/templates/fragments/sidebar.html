@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <div class="flex-shrink-0 bg-white" id="sidebar">
-        <form class="d-flex">
+        <form class="d-flex" th:action="@{/search}" method="get">
             <div class="input-group" id="sidebar-search">
-                <input class="form-control" id="player_search_input" type="search" placeholder="Spieler suchen..." aria-label="Search">
+                <input class="form-control" name="playername" id="player_search_input" type="search" placeholder="Spieler suchen..." aria-label="Search">
                 <button class="btn btn-outline-secondary" type="submit">
                     <i class="fas fa-search"></i>
                 </button>

@@ -10,6 +10,7 @@ class DateIterator(first: LocalDate, last: LocalDate, private val step: Long, pr
 
     override fun hasNext(): Boolean = hasNext
 
+    @Throws(NoSuchElementException::class)
     override fun next(): LocalDate {
         val value = next
 

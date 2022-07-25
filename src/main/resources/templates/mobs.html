@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+>
     <head>
         <title th:text="#{mobs}"></title>
         <link th:replace="@{fragments/header}">
@@ -50,7 +50,7 @@
                     <div class="card-header" th:text="#{mobSelection}"></div>
                     <div class="card-body">
                         <a class="icon-anchor" th:each="mobKey: ${T(de.zweistein2.minestats.models.minecraftstats.MobKeys).values()}" th:href="'mobs?name=' + ${mobKey}" data-bs-toggle="tooltip" data-bs-placement="top" th:title="#{${mobKey}}">
-                            <i class="icon-32" th:classappend="${#strings.replace(#strings.toLowerCase(mobKey), '_', '-')}"></i>
+                            <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-mob-'+${#strings.replace(#strings.toLowerCase(mobKey), '_', '-')+'-face'}"></i>
                         </a>
                     </div>
                 </div>

@@ -16,7 +16,14 @@
             </div>
 
             <form class="d-flex pe-3">
-                <div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="localeButton" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{${'changeLanguage'}}"></button>
+                    <ul class="dropdown-menu" aria-labelledby="localeButton">
+                        <li><a class="dropdown-item float-end" href="?lang=en" th:text="#{en}"></a></li>
+                        <li><a class="dropdown-item float-end" href="?lang=de" th:text="#{de}"></a></li>
+                    </ul>
+                </div>
+                <div style="align-self: center; padding-left: 1vw">
                     <a th:href="${@environment.getProperty('minestats.forumUrl')}">Zurück zum Forum</a>
                 </div>
             </form>

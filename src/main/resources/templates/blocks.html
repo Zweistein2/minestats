@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+>
     <head>
         <title th:text="#{blocks}"></title>
         <link th:replace="@{fragments/header}">
@@ -47,11 +47,25 @@
             </div>
             <div class="row row-cols-1" th:if="${blockName == null}">
                 <div class="card mb-4">
-                    <div class="card-header" th:text="#{blockSelection}"></div>
-                    <div class="card-body">
-                        <a class="icon-anchor" th:each="blockKey: ${T(de.zweistein2.minestats.models.minecraftstats.BlockKeys).values()}" th:href="'blocks?name=' + ${blockKey}" data-bs-toggle="tooltip" data-bs-placement="top" th:title="#{${blockKey}}">
-                            <i class="icon-32" th:classappend="${#strings.replace(#strings.toLowerCase(blockKey), '_', '-')}"></i>
-                        </a>
+                    <div class="card-header">
+                        <div class="row row-cols-2">
+                            <div class="col-12 mb-2">
+                                <div class="text-center" th:text="#{blockSelection}"></div>
+                            </div>
+                            <div class="col-6 align-self-center">
+                                <div class="text-center" th:text="#{blockSelection}"></div>
+                            </div>
+                            <div class="col-6">
+                                <form class="d-flex">
+                                    <div class="input-group" id="block-search">
+                                        <input class="form-control" id="block_search_input" type="search" th:placeholder="#{searchBlock}" aria-label="Search">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" id="blocklist">
+                        <div th:replace="@{fragments/blocks/blocklist}"></div>
                     </div>
                 </div>
             </div>
@@ -64,5 +78,21 @@
         const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         });
+
+        const blockSearchInput = document.getElementById("block_search_input");
+        const blockSearchHandler = function(event) {
+            $.ajax({
+                url: "blocksearch",
+                method: "get",
+                data: {
+                    "name": blockSearchInput.value
+                },
+                success: function(data) {
+                    document.getElementById("blocklist").innerHTML = data;
+                }
+            })
+        }
+
+        blockSearchInput.addEventListener('input', blockSearchHandler)
     </script>
 </html>

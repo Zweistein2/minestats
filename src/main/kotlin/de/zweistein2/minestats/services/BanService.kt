@@ -3,6 +3,7 @@ package de.zweistein2.minestats.services
 import de.zweistein2.minestats.models.ServerBanModel
 import de.zweistein2.minestats.repositories.ServerBanRepository
 import de.zweistein2.minestats.repositories.entities.ServerBanEntity
+import de.zweistein2.torque.spring.MonitoringSpringWrapper
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.time.LocalDateTime
@@ -13,6 +14,8 @@ import java.util.*
 class BanService(
     val serverBanRepository: ServerBanRepository,
 ) {
+    val monitoring = MonitoringSpringWrapper(true).getMonitoring()
+
     companion object {
         fun ServerBanEntity.convertEntityToModel(): ServerBanModel = ServerBanModel(
             UUID.fromString(this.uuid), this.name,
@@ -21,8 +24,10 @@ class BanService(
     }
 
     fun loadBans(): List<ServerBanModel> {
-        val bans = serverBanRepository.findAll()
+        return monitoring.withTimer("loadBans", "database") {
+            val bans = serverBanRepository.findAll()
 
-        return bans.stream().map { it.convertEntityToModel() }.toList() ?: listOf()
+            bans.stream().map { it.convertEntityToModel() }.toList() ?: listOf()
+        }
     }
 }

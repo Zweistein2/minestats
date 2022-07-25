@@ -15,5 +15,6 @@ enum class Pages(val pageUrl: String, val pageName: String, val pageIcon: String
     HALLOWEEN("halloween"," Halloweenevent", "fad fa-bat"),
     CHRISTMAS("christmas"," Weihnachtsevent", "fad fa-tree-christmas"),
     SEARCH("search", " Suche nach Spielern", null),
+    BLOCKSEARCH("blocksearch", " Suche nach Blöcken", null),
     ERROR("error_404", " 404 - Seite nicht gefunden", null);
 }

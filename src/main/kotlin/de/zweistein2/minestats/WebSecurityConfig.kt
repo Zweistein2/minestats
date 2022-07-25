@@ -24,7 +24,7 @@ class WebSecurityConfig: WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers("/", "/server", "/bestlist", "/dashboard", "/list", "/player", "/blocks", "/items", "/mobs", "/devstats", "/event", "/halloween", "/christmas", "/historic").permitAll()
+                .antMatchers("/", "/server", "/bestlist", "/dashboard", "/list", "/player", "/search", "/blocks", "/blocksearch", "/items", "/mobs", "/devstats", "/event", "/halloween", "/christmas", "/historic").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .logout()

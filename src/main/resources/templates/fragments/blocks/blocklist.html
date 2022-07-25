@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <div th:each="tag: ${tags}">
+        <h4 th:text="#{${tag}}"></h4>
+        <th:block th:each="blockKey: ${blockKeys}">
+            <a th:if="${blockKey.tags.size() != 0 && blockKey.tags.contains(tag)}" class="icon-anchor" th:href="'blocks?name=' + ${blockKey}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${blockKey}" th:title="#{${blockKey}}">
+                <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(blockKey), '_', '-')}"></i>
+            </a>
+        </th:block>
+        <hr>
+    </div>
+</html>
