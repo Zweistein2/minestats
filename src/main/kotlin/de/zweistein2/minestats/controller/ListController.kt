@@ -2,18 +2,19 @@ package de.zweistein2.minestats.controller
 
 import de.zweistein2.minestats.components.MinestatProperties
 import de.zweistein2.minestats.components.PlayerStatComparator
+import de.zweistein2.minestats.models.ServerPlayerModel
 import de.zweistein2.minestats.models.minecraftstats.*
 import de.zweistein2.minestats.services.BanService
 import de.zweistein2.minestats.services.PlayerService
 import de.zweistein2.torque.spring.MonitoringSpringWrapper
+import java.util.*
+import kotlin.system.measureTimeMillis
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.MessageSource
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
-import java.util.*
-import kotlin.system.measureTimeMillis
 
 private const val MAX_PLAYER_COUNT_FOR_LIST = 100
 
@@ -72,7 +73,31 @@ class ListController(
                 val players = playerService.loadAllPlayers()
                 val bans = banService.loadBans()
 
-                model.addAttribute("players", players.filter { player -> !bans.map { it.uuid }.contains(player.uuid) })
+                val unbannedPlayers = players.filter { player -> !bans.map { it.uuid }.contains(player.uuid) }
+                val totalMinedBlocksPerPlayer = mutableMapOf<ServerPlayerModel, Long>()
+                val totalPlacedBlocksPerPlayer = mutableMapOf<ServerPlayerModel, Long>()
+                val totalPickedUpBlocksPerPlayer = mutableMapOf<ServerPlayerModel, Long>()
+                val totalCraftedBlocksPerPlayer = mutableMapOf<ServerPlayerModel, Long>()
+
+                unbannedPlayers.forEach { player ->
+                    totalMinedBlocksPerPlayer[player] = 0
+                    totalPlacedBlocksPerPlayer[player] = 0
+                    totalPickedUpBlocksPerPlayer[player] = 0
+                    totalCraftedBlocksPerPlayer[player] = 0
+
+                    BlockKeys.values().forEach { blockKey ->
+                        totalMinedBlocksPerPlayer[player] = totalMinedBlocksPerPlayer[player]!! + player.stats.forCategory(CategoryKeys.MINED).forStat(blockKey)
+                        totalPlacedBlocksPerPlayer[player] = totalPlacedBlocksPerPlayer[player]!! + player.stats.forCategory(CategoryKeys.USED).forStat(blockKey)
+                        totalPickedUpBlocksPerPlayer[player] = totalPickedUpBlocksPerPlayer[player]!! + player.stats.forCategory(CategoryKeys.PICKED_UP).forStat(blockKey)
+                        totalCraftedBlocksPerPlayer[player] = totalCraftedBlocksPerPlayer[player]!! + player.stats.forCategory(CategoryKeys.CRAFTED).forStat(blockKey)
+                    }
+                }
+
+                model.addAttribute("players", unbannedPlayers)
+                model.addAttribute("totalMinedBlocksPerPlayer", totalMinedBlocksPerPlayer.toList().sortedByDescending { (_, value) -> value }.toMap())
+                model.addAttribute("totalPlacedBlocksPerPlayer", totalPlacedBlocksPerPlayer.toList().sortedByDescending { (_, value) -> value }.toMap())
+                model.addAttribute("totalPickedUpBlocksPerPlayer", totalPickedUpBlocksPerPlayer.toList().sortedByDescending { (_, value) -> value }.toMap())
+                model.addAttribute("totalCraftedBlocksPerPlayer", totalCraftedBlocksPerPlayer.toList().sortedByDescending { (_, value) -> value }.toMap())
             }
         }
 
