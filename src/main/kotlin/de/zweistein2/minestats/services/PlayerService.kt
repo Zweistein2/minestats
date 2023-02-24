@@ -13,12 +13,14 @@ import de.zweistein2.minestats.repositories.ServerPlayerHistoricRepository
 import de.zweistein2.minestats.repositories.ServerPlayerRepository
 import de.zweistein2.minestats.repositories.entities.ServerPlayerEntity
 import de.zweistein2.minestats.repositories.entities.ServerPlayerHistoricEntity
+import de.zweistein2.minestats.utils.MedalAggregatorUtil
+import de.zweistein2.minestats.utils.StatAggregatorUtil
 import de.zweistein2.torque.spring.MonitoringSpringWrapper
-import org.springframework.stereotype.Service
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
+import org.springframework.stereotype.Service
 
 private const val maxMedalPlayerCount = 10
 
@@ -117,25 +119,20 @@ class PlayerService(
                 val topThreePlayers = players.sortedWith(PlayerStatComparator(CategoryKeys.CUSTOM, stat))
                     .filter { it.stats.forCategory(CategoryKeys.CUSTOM).forStat(stat) != 0L }.take(3)
 
-                topThreePlayers.forEachIndexed { index, player ->
-                    val medals = allMedals.getOrPut(player.username) { Triple(0, 0, 0) }
-
-                    val newMedals = when (index) {
-                        0 -> {
-                            Triple(medals.first + 1, medals.second, medals.third)
-                        }
-                        1 -> {
-                            Triple(medals.first, medals.second + 1, medals.third)
-                        }
-                        2 -> {
-                            Triple(medals.first, medals.second, medals.third + 1)
-                        }
-                        else -> medals
-                    }
-
-                    allMedals[player.username] = newMedals
-                }
+                MedalAggregatorUtil.accountMedalsForTopThreePlayers(topThreePlayers, allMedals)
             }
+
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getBlockStatsPerPlayer(players, CategoryKeys.MINED, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getBlockStatsPerPlayer(players, CategoryKeys.USED, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getBlockStatsPerPlayer(players, CategoryKeys.PICKED_UP, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getBlockStatsPerPlayer(players, CategoryKeys.CRAFTED, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getBlockStatsPerPlayer(players, CategoryKeys.DROPPED, 3).map { it.key }.toList(), allMedals)
+
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getItemStatsPerPlayer(players, CategoryKeys.BROKEN, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getItemStatsPerPlayer(players, CategoryKeys.PICKED_UP, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getItemStatsPerPlayer(players, CategoryKeys.DROPPED, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getItemStatsPerPlayer(players, CategoryKeys.CRAFTED, 3).map { it.key }.toList(), allMedals)
+            MedalAggregatorUtil.accountMedalsForTopThreePlayers(StatAggregatorUtil.getItemStatsPerPlayer(players, CategoryKeys.USED, 3).map { it.key }.toList(), allMedals)
 
             allMedals.toList().sortedWith(MedalComparator()).reversed()
         }

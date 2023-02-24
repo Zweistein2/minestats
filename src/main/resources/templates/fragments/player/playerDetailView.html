@@ -123,7 +123,6 @@
                             </tr>
                             <tr>
                                 <td th:text="#{totalDistance} + ':'"></td>
-                                <!-- TODO: Gesamt Value aufaddieren -->
                                 <th class="text-end" th:text="${#numbers.formatDecimal(
                                 player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).WALK_ONE_CM) / 100 +
                                 player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).CROUCH_ONE_CM) / 100 +
@@ -160,108 +159,381 @@
                 <div class="card-body">
                     <table class="table">
                         <tbody>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_DEALT}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_DEALT), 1, 'DEFAULT', 1, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_TAKEN}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_TAKEN), 1, 'DEFAULT', 1, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DEATHS}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DEATHS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAYER_KILLS}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAYER_KILLS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_TRIGGER}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_TRIGGER), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_WIN}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_WIN), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DROP}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DROP), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_CHEST}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_CHEST), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_ENDERCHEST}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_ENDERCHEST), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_SHULKER_BOX}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_SHULKER_BOX), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_BARREL}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_BARREL), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).EAT_CAKE_SLICE}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).EAT_CAKE_SLICE), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
-                            <tr>
-                                <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAY_RECORD}} + ':'"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAY_RECORD), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
-                            </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_DEALT}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_DEALT), 1, 'DEFAULT', 1, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_TAKEN}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DAMAGE_TAKEN), 1, 'DEFAULT', 1, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DEATHS}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DEATHS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAYER_KILLS}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAYER_KILLS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_TRIGGER}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_TRIGGER), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_WIN}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).RAID_WIN), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DROP}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).DROP), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_CHEST}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_CHEST), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_ENDERCHEST}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_ENDERCHEST), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_SHULKER_BOX}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_SHULKER_BOX), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_BARREL}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).OPEN_BARREL), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).EAT_CAKE_SLICE}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).EAT_CAKE_SLICE), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAY_RECORD}} + ':'"></td>
+                            <td class="text-end" th:text="${#numbers.formatDecimal(player.stats.forCategory(T(de.zweistein2.minestats.models.minecraftstats.CategoryKeys).CUSTOM).forStat(T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).PLAY_RECORD), 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row row-cols-3">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header alert-success" th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS}}"></div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
+    <div class="row">
+        <div class="separator" th:text="#{blocks}"></div>
+        <div class="row row-cols-3">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{blocks} + ' (' + #{MINED} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${minedBlocks}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'blocks?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                </td>
+                            </tr>
                             <tr>
-                                <th scope="col" th:text="#{mob}"></th>
-                                <th scope="col" class="text-end" th:text="#{kills}"></th>
+                                <td th:text="#{MINED_BLOCKS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalMinedBlocks, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="mobStats: ${killedMobsList}">
-                                <td th:text="#{${mobStats.first}}"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(mobStats.second, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{blocks} + ' (' + #{PICKED_UP} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${pickedUpBlocks}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'blocks?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                </td>
                             </tr>
-                        </tbody>
-                    </table>
+                            <tr>
+                                <td th:text="#{PICKED_UP_BLOCKS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalPickedUpBlocks, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{blocks} + ' (' + #{PLACED} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${placedBlocks}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'blocks?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{PLACED_BLOCKS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalPlacedBlocks, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{blocks} + ' (' + #{CRAFTED} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${craftedBlocks}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'blocks?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{CRAFTED_BLOCKS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalCraftedBlocks, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{blocks} + ' (' + #{DROPPED} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${droppedBlocks}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'blocks?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{DROPPED_BLOCKS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalDroppedBlocks, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header alert-danger" th:text="#{killedByMobs}"></div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
+    </div>
+    <div class="row">
+        <div class="separator" th:text="#{items}"></div>
+        <div class="row row-cols-3">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{items} + ' (' + #{BROKEN} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${brokenItems}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'items?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                </td>
+                            </tr>
                             <tr>
-                                <th scope="col" th:text="#{mob}"></th>
-                                <th scope="col" class="text-end" th:text="#{kills}"></th>
+                                <td th:text="#{BROKEN_ITEMS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalBrokenItems, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="mobStats: ${killedByMobsList}">
-                                <td th:text="#{${mobStats.first}}"></td>
-                                <td class="text-end" th:text="${#numbers.formatDecimal(mobStats.second, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{items} + ' (' + #{PICKED_UP} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${pickedUpItems}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'items?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                </td>
                             </tr>
-                        </tbody>
-                    </table>
+                            <tr>
+                                <td th:text="#{PICKED_UP_ITEMS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalPickedUpItems, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{items} + ' (' + #{DROPPED} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${droppedItems}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'items?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{DROPPED_ITEMS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalDroppedItems, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{items} + ' (' + #{CRAFTED} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${craftedItems}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'items?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{CRAFTED_ITEMS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalCraftedItems, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header" th:text="#{topFive} + ' ' + #{items} + ' (' + #{USED} + ')'"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="element, iterStat: ${usedItems}" th:if="${iterStat.index} < 5 and ${element.value} > 0">
+                                <td>
+                                    <a class="icon-anchor" th:href="'items?name=' + ${element.key}" data-bs-toggle="tooltip" data-bs-placement="top" th:id="${element.key}" th:title="#{${element.key}}">
+                                        <i class="icon-32" th:classappend="'icon-minecraft icon-minecraft-'+${#strings.replace(#strings.toLowerCase(element.key), '_', '-')}"></i>
+                                    </a>
+                                    <span th:text="#{${element.key.name}}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{uses}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td th:text="#{USED_ITEMS} + ':'"></td>
+                                <th class="text-end" th:text="${#numbers.formatDecimal(totalUsedItems, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{uses}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="separator" th:text="#{mobs}"></div>
+        <div class="row row-cols-3">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header alert-success" th:text="#{${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).MOB_KILLS}}"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" th:text="#{mob}"></th>
+                                    <th scope="col" class="text-end" th:text="#{kills}"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="mobStats: ${killedMobsList}">
+                                    <td th:text="#{${mobStats.first}}"></td>
+                                    <td class="text-end" th:text="${#numbers.formatDecimal(mobStats.second, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header alert-danger" th:text="#{killedByMobs}"></div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" th:text="#{mob}"></th>
+                                    <th scope="col" class="text-end" th:text="#{kills}"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="mobStats: ${killedByMobsList}">
+                                    <td th:text="#{${mobStats.first}}"></td>
+                                    <td class="text-end" th:text="${#numbers.formatDecimal(mobStats.second, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

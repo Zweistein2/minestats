@@ -5,19 +5,20 @@ import de.zweistein2.minestats.models.minecraftstats.CategoryKeys
 import de.zweistein2.minestats.models.minecraftstats.CustomKeys
 import de.zweistein2.minestats.models.minecraftstats.MobKeys
 import de.zweistein2.minestats.services.PlayerService
+import de.zweistein2.minestats.utils.StatAggregatorUtil
 import de.zweistein2.torque.spring.MonitoringSpringWrapper
-import org.springframework.cache.annotation.CacheConfig
-import org.springframework.cache.annotation.Cacheable
-import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.system.measureTimeMillis
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.Cacheable
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 private const val MAX_LAST_PLAYED_COUNT = 20
 private const val TICKS_PER_SECOND = 20
@@ -135,6 +136,30 @@ class PlayerController(
                             .forStat(CustomKeys.TOTAL_WORLD_TIME) / TICKS_PER_SECOND / SECONDS_PER_MINUTE)
                     }
 
+                    val totalMinedBlocks = StatAggregatorUtil.getTotalBlockStatsForPlayer(player, CategoryKeys.MINED)
+                    val totalPlacedBlocks = StatAggregatorUtil.getTotalBlockStatsForPlayer(player, CategoryKeys.USED)
+                    val totalPickedUpBlocks = StatAggregatorUtil.getTotalBlockStatsForPlayer(player, CategoryKeys.PICKED_UP)
+                    val totalCraftedBlocks = StatAggregatorUtil.getTotalBlockStatsForPlayer(player, CategoryKeys.CRAFTED)
+                    val totalDroppedBlocks = StatAggregatorUtil.getTotalBlockStatsForPlayer(player, CategoryKeys.DROPPED)
+
+                    val totalBrokenItems = StatAggregatorUtil.getTotalItemStatsForPlayer(player, CategoryKeys.BROKEN)
+                    val totalPickedUpItems = StatAggregatorUtil.getTotalItemStatsForPlayer(player, CategoryKeys.PICKED_UP)
+                    val totalDroppedItems = StatAggregatorUtil.getTotalItemStatsForPlayer(player, CategoryKeys.DROPPED)
+                    val totalCraftedItems = StatAggregatorUtil.getTotalItemStatsForPlayer(player, CategoryKeys.CRAFTED)
+                    val totalUsedItems = StatAggregatorUtil.getTotalItemStatsForPlayer(player, CategoryKeys.USED)
+
+                    val minedBlocks = StatAggregatorUtil.getBlockStatsForPlayer(player, CategoryKeys.MINED)
+                    val placedBlocks = StatAggregatorUtil.getBlockStatsForPlayer(player, CategoryKeys.USED)
+                    val pickedUpBlocks = StatAggregatorUtil.getBlockStatsForPlayer(player, CategoryKeys.PICKED_UP)
+                    val craftedBlocks = StatAggregatorUtil.getBlockStatsForPlayer(player, CategoryKeys.CRAFTED)
+                    val droppedBlocks = StatAggregatorUtil.getBlockStatsForPlayer(player, CategoryKeys.DROPPED)
+
+                    val brokenItems = StatAggregatorUtil.getItemStatsForPlayer(player, CategoryKeys.BROKEN)
+                    val pickedUpItems = StatAggregatorUtil.getItemStatsForPlayer(player, CategoryKeys.PICKED_UP)
+                    val droppedItems = StatAggregatorUtil.getItemStatsForPlayer(player, CategoryKeys.DROPPED)
+                    val craftedItems = StatAggregatorUtil.getItemStatsForPlayer(player, CategoryKeys.CRAFTED)
+                    val usedItems = StatAggregatorUtil.getItemStatsForPlayer(player, CategoryKeys.USED)
+
                     model.addAttribute("player", player)
                     model.addAttribute(
                         "lastOnlineInMinutes",
@@ -152,6 +177,26 @@ class PlayerController(
                     model.addAttribute("playerMedals", playerService.getMedalsForPlayer(playername))
                     model.addAttribute("killedMobsList", killedMobs)
                     model.addAttribute("killedByMobsList", killedByMobs)
+                    model.addAttribute("totalMinedBlocks", totalMinedBlocks)
+                    model.addAttribute("totalPlacedBlocks", totalPlacedBlocks)
+                    model.addAttribute("totalPickedUpBlocks", totalPickedUpBlocks)
+                    model.addAttribute("totalCraftedBlocks", totalCraftedBlocks)
+                    model.addAttribute("totalDroppedBlocks", totalDroppedBlocks)
+                    model.addAttribute("totalBrokenItems", totalBrokenItems)
+                    model.addAttribute("totalPickedUpItems", totalPickedUpItems)
+                    model.addAttribute("totalDroppedItems", totalDroppedItems)
+                    model.addAttribute("totalCraftedItems", totalCraftedItems)
+                    model.addAttribute("totalUsedItems", totalUsedItems)
+                    model.addAttribute("minedBlocks", minedBlocks)
+                    model.addAttribute("placedBlocks", placedBlocks)
+                    model.addAttribute("pickedUpBlocks", pickedUpBlocks)
+                    model.addAttribute("craftedBlocks", craftedBlocks)
+                    model.addAttribute("droppedBlocks", droppedBlocks)
+                    model.addAttribute("brokenItems", brokenItems)
+                    model.addAttribute("pickedUpItems", pickedUpItems)
+                    model.addAttribute("droppedItems", droppedItems)
+                    model.addAttribute("craftedItems", craftedItems)
+                    model.addAttribute("usedItems", usedItems)
                 }
             }
         }

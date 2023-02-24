@@ -115,6 +115,150 @@
                         </div>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{DROPPED_BLOCKS}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr th:each="element, iterStat: ${totalDroppedBlocksPerPlayer}" th:if="${iterStat.index} < 10 and ${element.value} > 0">
+                                    <td>
+                                        <img th:src="'https://cravatar.eu/helmavatar/' + ${element.key.username}">
+                                        <a th:href="@{/player?playername={playername}(playername=${element.key.username})}" th:text="${element.key.username}"></a>
+                                    </td>
+                                    <td class="text-end">
+                                        <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                        <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{blocks}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <span>.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{BROKEN_ITEMS}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr th:each="element, iterStat: ${totalBrokenItemsPerPlayer}" th:if="${iterStat.index} < 10 and ${element.value} > 0">
+                                    <td>
+                                        <img th:src="'https://cravatar.eu/helmavatar/' + ${element.key.username}">
+                                        <a th:href="@{/player?playername={playername}(playername=${element.key.username})}" th:text="${element.key.username}"></a>
+                                    </td>
+                                    <td class="text-end">
+                                        <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                        <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <span>.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{PICKED_UP_ITEMS}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr th:each="element, iterStat: ${totalPickedUpItemsPerPlayer}" th:if="${iterStat.index} < 10 and ${element.value} > 0">
+                                    <td>
+                                        <img th:src="'https://cravatar.eu/helmavatar/' + ${element.key.username}">
+                                        <a th:href="@{/player?playername={playername}(playername=${element.key.username})}" th:text="${element.key.username}"></a>
+                                    </td>
+                                    <td class="text-end">
+                                        <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                        <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <span>.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{DROPPED_ITEMS}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr th:each="element, iterStat: ${totalDroppedItemsPerPlayer}" th:if="${iterStat.index} < 10 and ${element.value} > 0">
+                                    <td>
+                                        <img th:src="'https://cravatar.eu/helmavatar/' + ${element.key.username}">
+                                        <a th:href="@{/player?playername={playername}(playername=${element.key.username})}" th:text="${element.key.username}"></a>
+                                    </td>
+                                    <td class="text-end">
+                                        <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                        <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <span>.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{CRAFTED_ITEMS}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr th:each="element, iterStat: ${totalCraftedItemsPerPlayer}" th:if="${iterStat.index} < 10 and ${element.value} > 0">
+                                    <td>
+                                        <img th:src="'https://cravatar.eu/helmavatar/' + ${element.key.username}">
+                                        <a th:href="@{/player?playername={playername}(playername=${element.key.username})}" th:text="${element.key.username}"></a>
+                                    </td>
+                                    <td class="text-end">
+                                        <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                        <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{items}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <span>.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header" th:text="#{USED_ITEMS}"></div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                <tr th:each="element, iterStat: ${totalUsedItemsPerPlayer}" th:if="${iterStat.index} < 10 and ${element.value} > 0">
+                                    <td>
+                                        <img th:src="'https://cravatar.eu/helmavatar/' + ${element.key.username}">
+                                        <a th:href="@{/player?playername={playername}(playername=${element.key.username})}" th:text="${element.key.username}"></a>
+                                    </td>
+                                    <td class="text-end">
+                                        <i class="text-start" th:if="${iterStat.index} < 3" th:class="'fad fa-medal medal' + ${iterStat.index}"></i>
+                                        <span th:text="${#numbers.formatDecimal(element.value, 1, 'DEFAULT', 0, 'DEFAULT')} + ' ' + #{uses}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-end">
+                            <span>.</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col" th:each="customKey: ${T(de.zweistein2.minestats.models.minecraftstats.CustomKeys).values()}">
                     <div class="card mb-4">
                         <div class="card-header" th:text="#{${customKey}}"></div>
